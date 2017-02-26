@@ -1,3 +1,51 @@
 {{extend 'layout.html'}}
+<style>
+div#participant_optional_assist__row:before {
+    content: "追加区分";
+    font-weight: bold;
+    margin-left: 1em;
+}
 
-<h2>Manage participant</h2><p>{{=form}}</p>
+#participant_regist_optional_assist__row:before {
+	content: '追加区分';
+	display:inline-block;
+	font-weight: bold;
+	margin-right:1em;
+}
+
+#participant_regist_category__row > .w2p_fl, #participant_regist_category__row > .w2p_fw,
+#participant_regist_optional_assist__row, #participant_regist_optional_closing_party__row ,
+#participant_regist_optional_assist__row > .w2p_fl, #participant_regist_optional_assist__row > .w2p_fw,
+#participant_regist_optional_closing_party__row > .w2p_fl, #participant_regist_optional_closing_party__row > .w2p_fw
+{
+    display:inline-block;
+    margin-right:1em;
+}
+
+#participant_regist_optional_assist__row label, #participant_regist_optional_closing_party__row label{
+    font-weight:normal;
+}
+
+#participant_regist_category__row {
+    margin-bottom:0
+}
+
+#participant_regist_remark { height:10em }
+</style>
+<style id="style_gamemaster_form">
+#participant_regist_optional_closing_party__row ~ div {
+	display:none;
+}
+#participant_regist_abstract__row ~ div {
+	display:block;
+}
+</style>
+<script>
+$(function(){
+	$("#participant_regist_category").on("change",function(){
+		document.getElementById("style_gamemaster_form").disabled = (this.value != 0);
+	}).change();
+});
+</script>
+
+<h2>{{=conventionName}} 参加受付フォーム</h2><p>{{=form}}</p>
