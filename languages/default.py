@@ -1,5 +1,6 @@
 # coding: utf8
 {
+'Participant Regist' : '参加者登録',
 'Abstract' : '卓概要(掲載用)',
 'Category' : '参加区分',
 'Optional Assist' : 'えびのしっぽ',
