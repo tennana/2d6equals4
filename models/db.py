@@ -135,12 +135,13 @@ mail.settings.server = settings.email_server
 mail.settings.sender = settings.email_sender
 mail.settings.login = settings.email_login
 
-from gluon.contrib.login_methods.rpx_account import RPXAccount
+from gluon.contrib.login_methods.janrain_account import RPXAccount
 auth.settings.actions_disabled=['register','change_password',
     'request_reset_password']
 auth.settings.login_form = RPXAccount(request,
     api_key = settings.janrain_secret_key,
     domain = settings.janrain_app_name,
+    language = "ja",
     url = "http://%s/%s/default/user/login" % (request.env.http_host,request.application))
 
 auth.settings.login_form.mappings.Twitter = lambda profile:\

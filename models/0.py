@@ -21,5 +21,6 @@ settings.email_server = myconf.get('smtp.server')
 settings.email_sender = myconf.get('smtp.sender')
 settings.email_login = ''
 settings.login_method = 'janrain'
-settings.login_config = myconf.get('janrain.app_name')
+settings.janrain_app_name = myconf.get('janrain.app_name')
+settings.janrain_secret_key = myconf.get('janrain.secret_key')
 settings.plugins = []
