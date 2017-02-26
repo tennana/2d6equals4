@@ -139,6 +139,14 @@ from gluon.contrib.login_methods.rpx_account import RPXAccount
 auth.settings.actions_disabled=['register','change_password',
     'request_reset_password']
 auth.settings.login_form = RPXAccount(request,
-    api_key = settings.login_config.split(':')[-1],
-    domain = settings.login_config.split(':')[0],
+    api_key = settings.janrain_secret_key,
+    domain = settings.janrain_app_name,
     url = "http://%s/%s/default/user/login" % (request.env.http_host,request.application))
+
+auth.settings.login_form.mappings.Twitter = lambda profile:\
+    dict(registration_id = profile["identifier"],
+         username = profile["preferredUsername"],
+         email = '',
+         first_name = profile["displayName"],
+         last_name = '')
+
