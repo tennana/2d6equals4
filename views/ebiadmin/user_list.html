@@ -1,0 +1,16 @@
+{{extend 'layout.html'}}
+<p>{{=form}}</p>
+
+<HR>
+{{=A('tables',_href=URL('user_list/tables'))}}
+
+<br>
+<code>
+http://.../[app]/[controller]/data/tables<br>
+http://.../[app]/[controller]/data/create/[tablename]<br>
+http://.../[app]/[controller]/data/read/[tablename]/[id]<br>
+http://.../[app]/[controller]/data/update/[tablename]/[id]<br>
+http://.../[app]/[controller]/data/delete/[tablename]/[id]<br>
+http://.../[app]/[controller]/data/select/[tablename]<br>
+http://.../[app]/[controller]/data/search/[tablename]<br>
+</code>
