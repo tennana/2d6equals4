@@ -3,26 +3,30 @@
 <h2>
 {{=T('Sign Up') if request.args(0) == 'register' else T('Log In') if request.args(0) == 'login' else T(request.args(0).replace('_',' ').title())}}
 </h2>
-
-<div class="container">
-    <div class="row">
-        <div id="web2py_user_form" class="col-lg-6">
-        {{
-        if request.args(0)=='login':
-            if not 'register' in auth.settings.actions_disabled:
-                form.add_button(T('Sign Up'),URL(args='register', vars={'_next': request.vars._next} if request.vars._next else None),_class='btn btn-default')
-            pass
-            if not 'request_reset_password' in auth.settings.actions_disabled:
-                form.add_button(T('Lost Password'),URL(args='request_reset_password'),_class='btn btn-default')
-            pass
-        pass
-        =form
-        }}
-        </div>
-    </div>
+<p>参加登録にはログインと参加者登録が必要です</p>
+{{if request.args(0) == 'login':}}
+<div>
+一覧にないサービスでも、「Open ID」ボタンから対応するURLを入力することで、OpenID対応サイトのIDが使用できます。
+<ul>
+<li>YAHOO Japan ID: yahoo.co.jp</li>
+<li>mixi ID: mixi.jp</li>
+<li>はてなID: http://www.hatena.ne.jp/はてなID/</li>
+</div>
+{{elif request.args(0) == 'register':}}
+<p>このページではメールアドレスからログインアカウントを登録できます。</p>
+{{pass}}
+<div id="web2py_user_form">
+<p>{{=A('メールアドレスで登録する', _href=URL('user/register'))}}</p>
+{{
+=form
+}}
 </div>
 
 
+<style>
+#janrainEngageEmbed {height:160px }
+table { min-width:150em; }
+</style>
 {{block page_js}}
 <script>
     jQuery("#web2py_user_form input:visible:enabled:first").focus();
@@ -31,5 +35,6 @@
 {{elif request.args(0)=='change_password':}}
     web2py_validate_entropy(jQuery('#no_table_new_password'),100);
 {{pass}}
+    jQuery(document.getElementById("janrainEngageEmbed")).prependTo(document.getElementById("web2py_user_form")).after("<h2>e-mail login</h2>");
 </script>
 {{end page_js}}

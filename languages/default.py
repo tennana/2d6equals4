@@ -12,5 +12,6 @@
 'MaximumNumber': '対応可能人数(最大)',
 'Level': '対応レベル',
 'Belongings': '必須の持ち物',
-'Are you sure you want to delete this object?': 'チェックして送信すると参加申し込みがキャンセルされます。よろしいですか?'
+'Are you sure you want to delete this object?': 'チェックして送信すると参加申し込みがキャンセルされます。よろしいですか?',
+'First name': '参加者名'
 }

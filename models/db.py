@@ -131,23 +131,26 @@ auth.settings.reset_password_requires_verification = True
 # -------------------------------------------------------------------------
 # auth.enable_record_versioning(db)
 
-mail.settings.server = settings.email_server
-mail.settings.sender = settings.email_sender
-mail.settings.login = settings.email_login
-
 from gluon.contrib.login_methods.janrain_account import RPXAccount
-auth.settings.actions_disabled=['register','change_password',
-    'request_reset_password']
-auth.settings.login_form = RPXAccount(request,
+from gluon.contrib.login_methods.extended_login_form import ExtendedLoginForm
+
+RPXAccount_form = RPXAccount(request,
     api_key = settings.janrain_secret_key,
     domain = settings.janrain_app_name,
     language = "ja",
     url = "http://%s/%s/default/user/login" % (request.env.http_host,request.application))
 
-auth.settings.login_form.mappings.Twitter = lambda profile:\
+
+auth.settings.login_form = ExtendedLoginForm(auth, RPXAccount_form, signals=['token'])
+auth.settings.formstyle = 'table2cols'
+auth.settings.registration_requires_verification = False
+auth.settings.login_after_registration = False
+auth.settings.register_fields = ['first_name','email','password']
+auth.settings.profile_fields = ['first_name','email']
+
+RPXAccount_form.mappings.Twitter = lambda profile:\
     dict(registration_id = profile["identifier"],
          username = profile["preferredUsername"],
-         email = '',
          first_name = profile["displayName"],
          last_name = '')
 
