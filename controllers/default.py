@@ -13,12 +13,17 @@ def error():
 @auth.requires_login()
 def participant_manage():
 	fields = [
+		'first_name','email',
 		'category','optional_assist','optional_closing_party'
 	]
 	useMasterFields = True
 
 	own_participant_record = db.participant(db.participant.created_by==auth.user_id)
 	own_gameTable_record = None
+
+	if auth.user.email:
+		db.auth_user.email.writable = False
+		fields.remove('email')
 	if own_participant_record:
 		db.participant.category.writable = False
 		if own_participant_record.category == 0:
@@ -35,10 +40,11 @@ def participant_manage():
 	record = None
 	if own_participant_record:
 		record = own_participant_record.as_dict()
+		record.update(auth.user)
 		if own_gameTable_record:
 			record.update(own_gameTable_record.as_dict())
 
-	form = SQLFORM.factory(db.participant,db.gameTable,
+	form = SQLFORM.factory(db.auth_user,db.participant,db.gameTable,
 		table_name='participant_regist',
 		record=record,
 		showid=False,
@@ -46,6 +52,9 @@ def participant_manage():
 		formstyle = 'divs',
 		deletable=True,delete_label="参加をキャンセルする"
 	)
+	form.vars.first_name = auth.user.first_name
+	form.vars.email = auth.user.email
+
 	if form.process().accepted:
 		if form.deleted:
 			own_participant_record.delete_record()
@@ -54,6 +63,11 @@ def participant_manage():
 			response.flash = '参加をキャンセルしました'
 		else:
 			form.vars.tableName = '%(first_name)s卓 ' % auth.user + form.vars.systemname
+			user = db.auth_user[auth.user.id];
+			auth.user.email = form.vars.email
+			auth.user.first_name = form.vars.first_name
+			user.update_record(**{'email': form.vars.email,'first_name' : form.vars.first_name})
+
 			db.participant.update_or_insert(
 				(db.participant.created_by==auth.user_id),
 				**db.participant._filter_fields(form.vars)
