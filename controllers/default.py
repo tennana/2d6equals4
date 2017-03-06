@@ -41,6 +41,7 @@ def participant_manage():
 	if own_participant_record:
 		record = own_participant_record.as_dict()
 		record.update(auth.user)
+		record['tableName'] = ''
 		if own_gameTable_record:
 			record.update(own_gameTable_record.as_dict())
 
@@ -62,7 +63,6 @@ def participant_manage():
 				own_gameTable_record.delete_record()
 			response.flash = '参加をキャンセルしました'
 		else:
-			form.vars.tableName = '%(first_name)s卓 ' % auth.user + form.vars.systemname
 			user = db.auth_user[auth.user.id];
 			auth.user.email = form.vars.email
 			auth.user.first_name = form.vars.first_name

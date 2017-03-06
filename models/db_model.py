@@ -21,7 +21,7 @@ db.convention._enable_record_versioning()
 dic_gameLevel = {0:'TRPG初心者OK',1:'システム初心者OK',2:'経験者向け',3:'濃い'}
 
 db.define_table('gameTable',
-    Field('tableName', type='string', required=True, length=512 , writable=False,
+    Field('tableName', type='string', required=False, length=512 , writable=False,
           label=T('tableName')),
     Field('systemname', type='string', required=True, length=128 ,
           label=T('SystemName')),
