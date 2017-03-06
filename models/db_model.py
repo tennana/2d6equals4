@@ -49,7 +49,7 @@ dic_category = {0:'プレイヤー',1:'ゲームマスター',2:'ヘルP'}
 
 db.define_table('participant',
     Field('convention', type='reference convention'),
-    Field('status', type='integer', notnull=True, default = -1,writable=False,
+    Field('status', type='integer', notnull=True, default = 0,writable=False,
           requires = IS_IN_SET({'-1':'保留中','0':'参加受付','1':'キャンセル待ち','2':'キャンセル'},zero=None),
           label=T('Status')),
     Field('category', type='integer', notnull=True, default = 0,

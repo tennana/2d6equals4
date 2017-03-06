@@ -68,18 +68,14 @@ def participant_manage():
 			auth.user.first_name = form.vars.first_name
 			user.update_record(**{'email': form.vars.email,'first_name' : form.vars.first_name})
 
-			if useMasterFields:
-				if (not own_participant_record or own_participant_record.category != 0) and form.vars.category != 0:
+			if useMasterFields and form.vars.category.isdigit():
+				if (not own_participant_record or own_participant_record.category != 0) and int(form.vars.category) > 0:
 					form.vars.tableName = '%(first_name)s卓 ' % auth.user + form.vars.systemname
 					db.gameTable.update_or_insert(
 						(db.gameTable.created_by==auth.user_id),
 						**db.gameTable._filter_fields(form.vars)
 					)
-			if not own_participant_record :
-				if useMasterFields:
 					form.vars.status = -1
-				else :
-					form.vars.status = 0
 
 			db.participant.update_or_insert(
 				(db.participant.created_by==auth.user_id),
