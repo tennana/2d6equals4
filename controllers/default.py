@@ -63,12 +63,12 @@ def participant_manage():
 					(db.gameTable.created_by==auth.user_id),
 					**db.gameTable._filter_fields(form.vars)
 				)
-			if own_participant_record:
-				response.flash = '参加情報を更新しました'
-			else :
-				response.flash = '参加受付が完了しました'
+			db.commit()
+			redirect(URL('complete'))
 	elif form.errors:
 		response.flash = '入力内容にエラーがあります'
 
 	return dict(form=form,conventionName=db.convention[1].name)
 
+def complete():
+	return dict()
