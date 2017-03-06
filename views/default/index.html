@@ -15,11 +15,13 @@
 {{if not auth.user:}}
 <li>{{=A('ログイン', _href=URL('participant_manage'))}}します。</li>
 {{ pass }}
-<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページで必要な内容を書き換えて下さい。</li></ol>
+<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページで必要な内容を書き換えて下さい。</li>
 <li>送信後、「参加情報が登録されました。」と表示されたらOKです</li>
+</ol>
 <h2>参加のキャンセル方法</h2>
 <ol>
 {{if not auth.user:}}
 <li>{{=A('ログイン', _href=URL('participant_manage'))}}します。</li>
 {{ pass }}
-<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページ一番下、「参加をキャンセルする」にチェックを入れて送信して下さい。</li></ol>
+<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページ一番下、「参加をキャンセルする」にチェックを入れて送信して下さい。</li>
+</ol>
