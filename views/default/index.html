@@ -3,13 +3,23 @@
 <h1>Ebicon 7th参加受付サイト</h1>
 <p>このサイトは7th用の実験的な何かです。</p>
 <h2>参加登録方法</h2>
-<ol><li>Twitter,Googleアカウントなどで{{=A('ログイン', _href=URL('user/login'))}}するか{{=A('メールアドレスで登録', _href=URL('user/register'))}}します。</li>
-<li>参加者登録のページから、必要事項を入力して下さい。</li>
+<ol>
+{{if not auth.user:}}
+<li>Twitter,Googleアカウントなどで{{=A('ログイン', _href=URL('participant_manage'))}}するか{{=A('メールアドレスで登録', _href=URL('user/register'))}}します。</li>
+{{pass}}
+<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページから、必要事項を入力して下さい。</li>
 <li>送信後、「参加情報が登録されました。」と表示されたらOKです</li>
 </ol>
 <h2>送信内容の変更</h2>
-<ol><li>{{=A('ログイン', _href=URL('user/login'))}}します。</li>
-<li>参加者登録のページで必要な内容を書き換えて送信します。</li></ol>
+<ol>
+{{if not auth.user:}}
+<li>{{=A('ログイン', _href=URL('participant_manage'))}}します。</li>
+{{ pass }}
+<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページで必要な内容を書き換えて下さい。</li></ol>
+<li>送信後、「参加情報が登録されました。」と表示されたらOKです</li>
 <h2>参加のキャンセル方法</h2>
-<ol><li>{{=A('ログイン', _href=URL('user/login'))}}します。</li>
-<li>参加者登録のページ一番下、「参加をキャンセルする」にチェックを入れて送信します。</li></ol>
+<ol>
+{{if not auth.user:}}
+<li>{{=A('ログイン', _href=URL('participant_manage'))}}します。</li>
+{{ pass }}
+<li>{{=A('参加者登録', _href=URL('participant_manage'))}}のページ一番下、「参加をキャンセルする」にチェックを入れて送信して下さい。</li></ol>
