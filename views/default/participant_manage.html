@@ -32,6 +32,7 @@ div#participant_optional_assist__row:before {
 
 #participant_regist_remark { height:10em }
 </style>
+{{ if not form.record : }}
 <style id="style_gamemaster_form">
 #participant_regist_optional_closing_party__row ~ div {
 	display:none;
@@ -47,5 +48,5 @@ $(function(){
 	}).change();
 });
 </script>
-
+{{pass}}
 <h2>{{=conventionName}} 参加受付フォーム</h2><p>{{=form}}</p>
