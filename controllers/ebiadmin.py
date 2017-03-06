@@ -17,4 +17,17 @@ def user_list():
 	crud = Crud(db)
 	crud.settings.controller = 'ebiadmin'
 	crud.settings.detect_record_change = True
+	crud.settings.label_separator = ':'
+
+	db.gameTable.convention_id.readable = False
+	db.gameTable.created_by.readable = True
+	db.gameTable.created_on.readable = True
+	db.gameTable.modified_on.readable = True
+
+	db.participant.convention.readable = False
+	db.participant.created_by.readable = True
+	db.participant.created_on.readable = True
+	db.participant.modified_on.readable = True
+	db.auth_user.last_name.readable = False
+
 	return dict(form=crud())
