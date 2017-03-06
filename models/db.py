@@ -147,6 +147,7 @@ auth.settings.registration_requires_verification = False
 auth.settings.login_after_registration = False
 auth.settings.register_fields = ['first_name','email','password']
 auth.settings.profile_fields = ['first_name','email']
+auth.settings.update_fields = []
 
 RPXAccount_form.mappings.Twitter = lambda profile:\
     dict(registration_id = profile["identifier"],
