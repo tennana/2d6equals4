@@ -30,4 +30,9 @@ def user_list():
 	db.participant.modified_on.readable = True
 	db.auth_user.last_name.readable = False
 
-	return dict(form=crud())
+	count = None;
+        args = request.args
+        if len(args) > 1:
+		count = db(db[args[1]]).count()
+
+	return dict(form=crud(),count=count)

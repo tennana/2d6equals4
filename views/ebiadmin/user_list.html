@@ -1,4 +1,7 @@
 {{extend 'layout.html'}}
+{{ if count != None : }}
+<h3>全レコード数 : {{= count }}</h3>
+{{ pass }}
 <p>{{=form}}</p>
 
 <HR>
