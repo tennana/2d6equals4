@@ -1,4 +1,7 @@
 {{extend 'layout.html'}}
+<style>
+#participant_list td { padding-right:1em }
+</style>
 
 <h1>Ebicon 7th参加受付サイト</h1>
 <p>このサイトは7th用の実験的な何かです。</p>
@@ -28,3 +31,5 @@
 <h2>参加区分の変更方法</h2>
 <p>一度キャンセルしてから再度参加者登録をしてください。</p>
 
+<h2>現在の応募状況</h2>
+{{=participant_list}}

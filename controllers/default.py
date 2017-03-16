@@ -5,7 +5,13 @@ def download(): return response.download(request,db)
 def call(): return service()
 ### end requires
 def index():
-    return dict()
+    count = db.participant.id.count()
+    list = db(db.participant).select(db.participant.category,count,groupby=db.participant.category)
+    return dict(participant_list=SQLTABLE(
+	list,
+	headers={'participant.category':'参加区分','COUNT(participant.id)':"人数"},
+	_id='participant_list'
+    ))
 
 def error():
     return dict()
