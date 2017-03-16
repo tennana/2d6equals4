@@ -6,7 +6,11 @@ def call(): return service()
 ### end requires
 def index():
     count = db.participant.id.count()
-    list = db(db.participant).select(db.participant.category,count,groupby=db.participant.category)
+    list = db(db.participant).select(
+	db.participant.category,count
+	,groupby=db.participant.category
+	,cacheable=True
+    )
     return dict(participant_list=SQLTABLE(
 	list,
 	headers={'participant.category':'参加区分','COUNT(participant.id)':"人数"},
