@@ -6,4 +6,5 @@ response.meta.description = settings.description
 response.menu = [
 (T('TOP'),URL('default','index')==URL(),URL('default','index'),[]),
 (T('Participant Regist'),URL('default','participant_manage')==URL(),URL('default','participant_manage'),[]),
+(T('卓情報'),URL('default','gameTable')==URL(),URL('default','gameTable'),[]),
 ]

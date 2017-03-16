@@ -17,6 +17,16 @@ def index():
 	_id='participant_list'
     ))
 
+def gameTable():
+    tableNo = None
+    if len(request.args)>0 :
+        tableNo = request.args[0]
+        game_table_info_rows = db((db.gameTable.created_by == db.participant.created_by) & (db.participant.category==1) & (db.gameTable.id==tableNo)).select(cacheable=True)
+    else :
+        game_table_info_rows = db((db.gameTable.created_by == db.participant.created_by) & (db.participant.category==1)).select(cacheable=True)
+
+    return dict(game_table_rows = game_table_info_rows)
+
 def error():
     return dict()
 
