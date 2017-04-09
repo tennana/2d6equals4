@@ -1,0 +1,12 @@
+{{extend 'layout.html'}}
+<style>
+table { min-width:20% }
+table tr > td { padding-bottom:0.5em }
+table tr > th:first-child { min-width: 12em}
+</style>
+<script>
+w2p_ajax_confirm_message = 'チェックして送信するとメッセージを削除します。よろしいですか？';
+</script>
+<h1>メッセージボックス</h1>
+<p>{{=button}}</p>
+{{=form}}

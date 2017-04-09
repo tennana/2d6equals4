@@ -157,3 +157,7 @@ RPXAccount_form.mappings.Twitter = lambda profile:\
          first_name = profile["displayName"],
          last_name = '')
 
+from gluon import current
+current.db = db
+current.auth = auth
+from gluon.custom_import import track_changes; track_changes(True)

@@ -92,3 +92,4 @@ databases/
 languages/
 *.example
 sessions/
+uploads/

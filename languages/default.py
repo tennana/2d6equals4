@@ -13,5 +13,6 @@
 'Level': '対応レベル',
 'Belongings': '必須の持ち物',
 'Are you sure you want to delete this object?': 'チェックして送信すると参加申し込みがキャンセルされます。よろしいですか?',
-'First name': '参加者名'
+'First name': '参加者名',
+'file': 'なし'
 }

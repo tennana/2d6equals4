@@ -111,3 +111,8 @@ def participant_manage():
 
 def complete():
 	return dict()
+
+@auth.requires_login()
+def messages():
+    import messages as messagesModule
+    return messagesModule.messages(db,auth,request)
