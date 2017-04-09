@@ -20,6 +20,7 @@ def messages():
     crud.messages.update_log = 'Message Record %(id)s updated'
     crud.settings.create_next = URL('messages')
     crud.settings.download_url = URL('download')
+    crud.settings.update_ondelete=remove_message_permission
 
     button = A(BUTTON('リストへ戻る'),_href=URL('messages'));
     db.messages.to_group.represent = show_to_group
@@ -57,6 +58,13 @@ def give_create_message_permission(form):
     auth.add_permission(group_id, 'delete', db.messages,message_id)
     # 宛先
     auth.add_permission(form.vars.to_group, 'read', db.messages,message_id)
+
+def remove_message_permission(form):
+    db = current.db
+    auth = current.auth
+    message_id = form.vars.id
+    permission = auth.table_permission()
+    db((permission.record_id == message_id) & (permission.table_name == 'messages')).delete()
 
 def show_to_group(id,row):
 	return get_to_group_list()[id]
