@@ -115,4 +115,4 @@ def complete():
 @auth.requires_login()
 def messages():
     import messages as messagesModule
-    return messagesModule.messages(db,auth,request)
+    return messagesModule.messages()

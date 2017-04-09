@@ -3,7 +3,10 @@ from gluon import *
 from gluon.tools import Crud
 from gluon.html import *
 
-def messages(db,auth,request):
+def messages():
+    db = current.db
+    auth = current.auth
+    request = current.request
 
     crud= Crud(db)
     crud.settings.formstyle = 'table3cols'
