@@ -20,6 +20,7 @@ def messages(db,auth,request):
 
     button = A(BUTTON('リストへ戻る'),_href=URL('messages'));
     db.messages.to_group.represent = show_to_group
+    db.messages.to_group.requires = IS_IN_SET(get_to_group_list(),zero=None)
     db.messages.created_by.label = '作成者'
     db.messages.created_by.readable = True
 
@@ -33,7 +34,6 @@ def messages(db,auth,request):
     if(request.args(0) == 'update'):
         crud.settings.auth = auth
 	db.messages.to_group.writable = False
-        db.messages.to_group.requires = IS_IN_SET(get_to_group_list(),zero=None)
         return dict(form=crud.update(db.messages,request.args(1), deletable=True),button=button)
 
     query = auth.accessible_query('read', db.messages, auth.user.id)
