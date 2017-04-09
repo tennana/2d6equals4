@@ -20,6 +20,7 @@ def messages():
     crud.messages.update_log = 'Message Record %(id)s updated'
     crud.settings.create_next = URL('messages')
     crud.settings.download_url = URL('download')
+    crud.settings.create_onaccept=give_create_message_permission
     crud.settings.update_ondelete=remove_message_permission
 
     button = A(BUTTON('リストへ戻る'),_href=URL('messages'));
@@ -34,7 +35,7 @@ def messages():
 		button += A(BUTTON('編集する'),_href=URL('messages/update',request.args(1)));
         return dict(form=crud.read(db.messages,request.args(1)),button=button)
     if(request.args(0) == 'new'):
-        return dict(form=crud.create(db.messages,onaccept=give_create_message_permission),button=button)
+        return dict(form=crud.create(db.messages),button=button)
     if(request.args(0) == 'update'):
         crud.settings.auth = auth
 	db.messages.to_group.writable = False
