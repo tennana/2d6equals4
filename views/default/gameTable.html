@@ -22,22 +22,22 @@ pre { color: black; }
 <hr>
 {{ for tableInfo in game_table_rows: }}
 <section id="tableInfo_{{=tableInfo.gameTable.id}}" class="mobile_close">
-<h1>{{=tableInfo.gameTable.tableName}}</h1>
-<p>ゲームマスター : {{=db.participant.created_by.represent(tableInfo.participant.created_by)}}</p>
-<p>{{=T('SystemName')}} : {{=tableInfo.gameTable.systemname}}</p>
-<p>参加可能人数 : {{=tableInfo.gameTable.minimumnumber}} ～ {{=tableInfo.gameTable.maximumnumber}}</p>
-<p>{{=T('Level')}} : {{=db.gameTable.gameLevel.represent(tableInfo.gameTable.gameLevel)}}</p>
-{{ if tableInfo.gameTable.belongings : }}
-<p>{{=T('Belongings')}} : {{=tableInfo.gameTable.belongings}}</p>
-{{ pass }}
-<p class="mobile_ellipsis">{{=T('Abstract')}}</p>
-<div class="mobile_ellipsis">{{=PRE(tableInfo.gameTable.abstract)}}</div>
-{{ if tableInfo.participant.remark : }}
-<p class="mobile_ellipsis">{{=T('Remark')}}</p>
-<div class="mobile_ellipsis">{{=PRE(tableInfo.participant.remark)}}</div>
-{{ pass }}
+	<h1>{{=tableInfo.gameTable.tableName}}</h1>
+	<p>ゲームマスター : {{=db.participant.created_by.represent(tableInfo.participant.created_by)}}</p>
+	<p>{{=T('SystemName')}} : {{=tableInfo.gameTable.systemname}}</p>
+	<p>参加可能人数 : {{=tableInfo.gameTable.minimumnumber}} ～ {{=tableInfo.gameTable.maximumnumber}}</p>
+	<p>{{=T('Level')}} : {{=db.gameTable.gameLevel.represent(tableInfo.gameTable.gameLevel)}}</p>
+	{{ if tableInfo.gameTable.belongings : }}
+	<p>{{=T('Belongings')}} : {{=tableInfo.gameTable.belongings}}</p>
+	{{ pass }}
+	<p class="mobile_ellipsis">{{=T('Abstract')}}</p>
+	<div class="mobile_ellipsis">{{=PRE(tableInfo.gameTable.abstract)}}</div>
+	{{ if tableInfo.participant.remark : }}
+	<p class="mobile_ellipsis">{{=T('Remark')}}</p>
+	<div class="mobile_ellipsis">{{=PRE(tableInfo.participant.remark)}}</div>
+	{{ pass }}
+	<button class="btn btn-info btn-block mobile_open_button"><i class="glyphicon glyphicon-info-sign"></i> 詳細</button>
 </section>
-<button class="btn btn-info btn-block mobile_open_button"><i class="glyphicon glyphicon-info-sign"></i> 詳細</button>
 <p><a href="#top" class="btn goTopLink btn-outline-success">先頭へ戻る</a></p>
 <hr>
 {{ pass }}
