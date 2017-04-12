@@ -1,0 +1,35 @@
+<tableSelectStatus>
+	<div if={ GMData }>
+	  <h2>GM情報</h2>
+	  <p><a href="#tableInfo_{ opts.GMData.gmTableId }">{ getTableName(opts.GMData.gmTableId) }</a></p>
+	  <p>第一希望:{opts.GMData.one}人</p>
+	  <p>第二希望:{opts.GMData.two}人</p>
+	</div>
+	<div if={ !decision }>
+	  <h2>選択中の卓</h2>
+	  <p>第一希望：<br><a href="#tableInfo_{ oneTableID }">{ getTableName(oneTableID) }</a></p>
+	  <p>第二希望：<br><a href="#tableInfo_{ twoTableID }">{ getTableName(twoTableID) }</a></p>
+	</div>
+	<div if={ decision }>
+	  <h2>決定卓</h2>
+	  <p><a href="#{ opts.decision }_anchor"><strong>{ getTableName(opts.decision) }</strong></a></p>
+	</div>
+	<script>
+		this.oneTableID = opts.oneTableID || '';
+		this.twoTableID = opts.twoTableID || '';
+		getTableName(tableID){
+			if(tableID === undefined) return "未選択";
+			for( var i in opts.info){
+				if(opts.info[i].tableID == tableID){
+					return opts.info[i].tableName;
+				}
+			}
+			return "未選択";
+		}
+		window.on("update",function(opts){
+			this.oneTableID = opts.oneTableID || this.oneTableID;
+			this.twoTableID = opts.twoTableID || this.twoTableID;
+			this.update();
+		}.bind(this));
+	</script>
+</tableSelectStatus>

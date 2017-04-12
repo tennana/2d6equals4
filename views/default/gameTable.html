@@ -12,6 +12,7 @@ pre { color: black; }
 }
 </style>
 <div id="top">
+<tableSelectStatus></tableSelectStatus>
 <h1>卓情報 一覧</h1>
 <ol>
 {{ for tableInfo in game_table_rows: }}
@@ -37,6 +38,7 @@ pre { color: black; }
 	<div class="mobile_ellipsis">{{=PRE(tableInfo.participant.remark)}}</div>
 	{{ pass }}
 	<button class="btn btn-info btn-block mobile_open_button"><i class="glyphicon glyphicon-info-sign"></i> 詳細</button>
+	<tableSelectButton data-tableID="{{=tableInfo.gameTable.id}}"></tableSelectButton>
 </section>
 <p><a href="#top" class="btn goTopLink btn-outline-success">先頭へ戻る</a></p>
 <hr>
@@ -52,5 +54,14 @@ $(function(){
 	scrollTo(0,$section.offset().top-66);
     })
     .on("click",".goTopLink",shiftWindow);
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.4.1/riot.min.js" defer></script>
+<script src="static/js/tableSelectStatusTag.js" defer></script>
+<script src="static/js/tableSelectButtonTag.js" defer></script>
+<script>
+$(function(){
+	riot.observable(window);
+	riot.mount("*",{info:[{"tableID":"1","tableName":"てんなな"}],oneTableID:1,twoTableID:1,GMData:{"one":1,"two":2},decision:false});
 });
 </script>
