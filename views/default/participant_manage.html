@@ -49,4 +49,6 @@ $(function(){
 });
 </script>
 {{pass}}
-<h2>{{=conventionName}} 参加受付フォーム</h2><p>{{=form}}</p>
+<h2>{{=conventionName}} 参加受付フォーム</h2>
+<p><em>参加登録状況:{{= '未登録' if not form.record else '登録済み'}}</em></p>
+<p>{{=form}}</p>
