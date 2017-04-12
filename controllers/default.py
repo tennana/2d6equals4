@@ -90,7 +90,7 @@ def participant_manage():
 
 			if useMasterFields:
 				if ((not own_participant_record and int(form.vars.category) > 0)
-				 or own_participant_record.category != 0):
+				 or (own_participant_record and own_participant_record.category != 0)):
 					form.vars.tableName = '%(first_name)s卓 ' % auth.user + form.vars.systemname
 					db.gameTable.update_or_insert(
 						(db.gameTable.created_by==auth.user_id),
