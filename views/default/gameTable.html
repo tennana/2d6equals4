@@ -1,6 +1,15 @@
 {{extend 'layout.html'}}
 <style>
 pre { color: black; }
+.btn { display:inline-block }
+.btn-group.btn-block { width:100% }
+.selectBtn { width: 48.2%; }
+.mobile_open_button { display : none; }
+@media (max-width: 480px) {
+	pre { white-space: pre-line; }
+	.mobile_open_button { display : block }
+	.mobile_close > .mobile_ellipsis {display:none}
+}
 </style>
 <div id="top">
 <h1>卓情報 一覧</h1>
@@ -12,7 +21,7 @@ pre { color: black; }
 </div>
 <hr>
 {{ for tableInfo in game_table_rows: }}
-<section id="tableInfo_{{=tableInfo.gameTable.id}}">
+<section id="tableInfo_{{=tableInfo.gameTable.id}}" class="mobile_close">
 <h1>{{=tableInfo.gameTable.tableName}}</h1>
 <p>ゲームマスター : {{=db.participant.created_by.represent(tableInfo.participant.created_by)}}</p>
 <p>{{=T('SystemName')}} : {{=tableInfo.gameTable.systemname}}</p>
@@ -21,19 +30,27 @@ pre { color: black; }
 {{ if tableInfo.gameTable.belongings : }}
 <p>{{=T('Belongings')}} : {{=tableInfo.gameTable.belongings}}</p>
 {{ pass }}
-<p>{{=T('Abstract')}}</p>
-<div>{{=PRE(tableInfo.gameTable.abstract)}}</div>
+<p class="mobile_ellipsis">{{=T('Abstract')}}</p>
+<div class="mobile_ellipsis">{{=PRE(tableInfo.gameTable.abstract)}}</div>
 {{ if tableInfo.participant.remark : }}
-<p>{{=T('Remark')}}</p>
-<div>{{=PRE(tableInfo.participant.remark)}}</div>
+<p class="mobile_ellipsis">{{=T('Remark')}}</p>
+<div class="mobile_ellipsis">{{=PRE(tableInfo.participant.remark)}}</div>
 {{ pass }}
 </section>
-<p><a href="#top">先頭へ戻る</a></p>
+<button class="btn btn-info btn-block mobile_open_button"><i class="glyphicon glyphicon-info-sign"></i> 詳細</button>
+<p><a href="#top" class="btn goTopLink btn-outline-success">先頭へ戻る</a></p>
 <hr>
 {{ pass }}
 
 <script>
-    var shiftWindow = function() { scrollBy(0, -80) };
-    window.addEventListener("hashchange", shiftWindow);
-    function load() { if (window.location.hash) shiftWindow(); }
+$(function(){
+    var shiftWindow = function() { setTimeout(function(){scrollBy(0, -80);},1); };
+    if (window.location.hash) shiftWindow();
+
+    $(document.getElementById("top").parentNode).on("click",".mobile_open_button",function(){
+	var $section = $(this).button("toggle").prev().toggleClass("mobile_close");
+	scrollTo(0,$section.offset().top-66);
+    })
+    .on("click",".goTopLink",shiftWindow);
+});
 </script>
