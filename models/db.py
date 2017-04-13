@@ -131,7 +131,7 @@ auth.settings.reset_password_requires_verification = True
 # -------------------------------------------------------------------------
 # after defining tables, uncomment below to enable auditing
 # -------------------------------------------------------------------------
-# auth.enable_record_versioning(db)
+auth.enable_record_versioning(db)
 
 from gluon.contrib.login_methods.janrain_account import RPXAccount
 from gluon.contrib.login_methods.extended_login_form import ExtendedLoginForm
