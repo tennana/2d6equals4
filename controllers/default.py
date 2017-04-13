@@ -3,7 +3,10 @@
 def user(): return dict(form=auth())
 def download(): return response.download(request,db)
 def call(): return service()
+
+import gluon.contrib.simplejson as json
 ### end requires
+
 def index():
     count = db.participant.id.count()
     list = db(db.participant).select(
@@ -18,6 +21,7 @@ def index():
     ))
 
 def gameTable():
+    # テーブル状態取得
     tableNo = None
     if len(request.args)>0 :
         tableNo = request.args[0]
@@ -25,7 +29,34 @@ def gameTable():
     else :
         game_table_info_rows = db((db.gameTable.created_by == db.participant.created_by) & (db.participant.category==1)).select(cacheable=True)
 
-    return dict(game_table_rows = game_table_info_rows)
+    own_participant_record = db.participant(db.participant.created_by==auth.user_id)
+    if not own_participant_record :
+        return dict(game_table_rows = game_table_info_rows, json_table_data_tag = None)
+
+    # 参加者なら参加情報からタグに必要な情報を作る
+    db_wishforgametable = db(db.wishforgametable.participant_id==own_participant_record.id);
+    count = db_wishforgametable.count();
+    wishforgametable_record = db_wishforgametable.select(orderby=~db.wishforgametable.priority)
+    print wishforgametable_record
+
+    tableInfoForJson = [dict(tableID = r.gameTable.id, tableName = r.gameTable.tableName) for r in game_table_info_rows];
+    GMDataDic = dict()
+    if own_participant_record.category == 1:
+        own_gameTableInfo_record = db(db.gameTable.created_by == own_participant_record.created_by).select(cacheable=True)
+        gmTableId = own_gameTableInfo_record.first().id
+	db_wish_own_table = db.wishforgametable.gametable_id==gmTableId
+        GMDataDic["one"] = db((db_wish_own_table) & (db.wishforgametable.priority == 500)).count()
+        GMDataDic["two"] = db((db_wish_own_table) & (db.wishforgametable.priority == 400)).count()
+	GMDataDic["gmTableId"] = gmTableId
+
+    json_table_data = json.dumps(dict(
+         info = tableInfoForJson,
+         oneTableID = wishforgametable_record[0].id if count > 0 else None,
+         twoTableID = wishforgametable_record[1].id if count > 1 else None,
+         decision = own_participant_record.decisionToPlayer,
+         GMData = GMDataDic
+    ))
+    return dict(game_table_rows = game_table_info_rows, json_table_data_tag = SCRIPT('var tagData = '+json_table_data, _type='text/javascript'))
 
 def error():
     return dict()
@@ -55,7 +86,7 @@ def participant_manage():
 		fields.extend(gametableFields)
 		own_gameTable_record = db.gameTable(db.gameTable.created_by==auth.user_id)
 
-	fields.append('remark');
+	fields.append('remark')
 
 	record = None
 	if own_participant_record:

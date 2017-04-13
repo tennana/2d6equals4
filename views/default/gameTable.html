@@ -11,7 +11,8 @@ pre { color: black; }
 	.mobile_close > .mobile_ellipsis {display:none}
 }
 </style>
-<div id="top">
+<a id="top"></a>
+<div>
 <tableSelectStatus></tableSelectStatus>
 <h1>卓情報 一覧</h1>
 <ol>
@@ -50,18 +51,21 @@ $(function(){
     if (window.location.hash) shiftWindow();
 
     $(document.getElementById("top").parentNode).on("click",".mobile_open_button",function(){
-	var $section = $(this).button("toggle").prev().toggleClass("mobile_close");
+	var $section = $(this).button("toggle").parent().toggleClass("mobile_close").focus();
 	scrollTo(0,$section.offset().top-66);
     })
     .on("click",".goTopLink",shiftWindow);
 });
 </script>
+{{ if json_table_data_tag: }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.4.1/riot.min.js" defer></script>
 <script src="static/js/tableSelectStatusTag.js" defer></script>
 <script src="static/js/tableSelectButtonTag.js" defer></script>
+{{= json_table_data_tag }}
 <script>
 $(function(){
 	riot.observable(window);
-	riot.mount("*",{info:[{"tableID":"1","tableName":"てんなな"}],oneTableID:1,twoTableID:1,GMData:{"one":1,"two":2},decision:false});
+	riot.mount("*",tagData);
 });
 </script>
+{{ pass }}

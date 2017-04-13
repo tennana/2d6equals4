@@ -74,7 +74,7 @@ db.define_table('wishforgametable',
           label=T('Participant Id')),
     Field('gametable_id', type='reference gameTable', required=True,
           label=T('Gametable Id')),
-    Field('priority', type='integer', default = 999,
+    Field('priority', type='integer', default = 0,
           label=T('Priority')),
     auth.signature,
     migrate=settings.migrate)
