@@ -32,7 +32,7 @@ div#participant_optional_assist__row:before {
 
 #participant_regist_remark { height:10em }
 </style>
-{{ if not form.record : }}
+{{ if isinstance(form,SQLFORM) and not form.record : }}
 <style id="style_gamemaster_form">
 #participant_regist_systemname__row, #participant_regist_systemname__row ~ div {
 	display:none;
@@ -50,5 +50,5 @@ $(function(){
 </script>
 {{pass}}
 <h2>{{=conventionName}} 参加受付フォーム</h2>
-<p><em>参加登録状況:{{= '未登録' if not form.record else '登録済み'}}</em></p>
+<p><em>参加登録状況:{{= '未登録' if isinstance(form,SQLFORM) and not form.record else '登録済み'}}</em></p>
 <p>{{=form}}</p>

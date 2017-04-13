@@ -5,6 +5,7 @@ def download(): return response.download(request,db)
 def call(): return service()
 
 import gluon.contrib.simplejson as json
+import datetime
 ### end requires
 
 def index():
@@ -99,6 +100,8 @@ def participant_manage():
 	own_participant_record = db.participant(db.participant.created_by==auth.user_id)
 	own_gameTable_record = None
 
+	readonly = db.convention[1].openingDate < datetime.datetime.today() # 開始時刻を過ぎたら編集不可
+
 	if auth.user.email:
 		db.auth_user.email.writable = False
 		fields.remove('email')
@@ -106,6 +109,8 @@ def participant_manage():
 		db.participant.category.writable = False
 		if own_participant_record.category == 0:
 			useMasterFields = False
+	elif readonly:
+		return dict(form=B("参加者登録は締め切りました"),conventionName=db.convention[1].name)
 	if useMasterFields:
 		gametableFields = [
 			'systemname','minimumnumber','maximumnumber','gameLevel','belongings','abstract'
@@ -122,14 +127,14 @@ def participant_manage():
 		record['tableName'] = ''
 		if own_gameTable_record:
 			record.update(own_gameTable_record.as_dict())
-
 	form = SQLFORM.factory(db.auth_user,db.participant,db.gameTable,
 		table_name='participant_regist',
 		record=record,
 		showid=False,
+		readonly=readonly,
 		fields = fields,
 		formstyle = 'divs',
-		deletable=True,delete_label="参加をキャンセルする"
+		deletable= not readonly,delete_label="参加をキャンセルする"
 	)
 	form.vars.first_name = auth.user.first_name
 	form.vars.email = auth.user.email
