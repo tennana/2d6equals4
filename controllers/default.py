@@ -37,7 +37,6 @@ def gameTable():
     db_wishforgametable = db(db.wishforgametable.participant_id==own_participant_record.id);
     count = db_wishforgametable.count();
     wishforgametable_record = db_wishforgametable.select(orderby=~db.wishforgametable.priority)
-    print wishforgametable_record
 
     tableInfoForJson = [dict(tableID = r.gameTable.id, tableName = r.gameTable.tableName) for r in game_table_info_rows];
     GMDataDic = dict()
@@ -56,12 +55,35 @@ def gameTable():
 
     json_table_data = json.dumps(dict(
          info = tableInfoForJson,
-         oneTableID = wishforgametable_record[0].id if count > 0 else None,
-         twoTableID = wishforgametable_record[1].id if count > 1 else None,
+         oneTableID = wishforgametable_record[0].gametable_id if count > 0 else None,
+         twoTableID = wishforgametable_record[1].gametable_id if count > 1 else None,
          decision = own_participant_record.decisionToPlayer,
          GMData = GMDataDic
     ))
     return dict(game_table_rows = game_table_info_rows, json_table_data_tag = SCRIPT('var tagData = '+json_table_data, _type='text/javascript'))
+
+@auth.requires_login()
+def wish():
+    own_participant_record = db.participant(db.participant.created_by==auth.user_id)
+    if not own_participant_record :
+        return 'error:参加者登録が見つかりません'
+    if own_participant_record.decisionToPlayer:
+        return 'error:既に参加卓が決まっています'
+
+    db.wishforgametable.update_or_insert(
+        ((db.wishforgametable.participant_id == own_participant_record.id) & (db.wishforgametable.priority==500)),
+        participant_id= own_participant_record.id,
+        gametable_id = request.vars.oneTableID,
+        priority = 500
+    )
+
+    db.wishforgametable.update_or_insert(
+        ((db.wishforgametable.participant_id == own_participant_record.id) & (db.wishforgametable.priority==400)),
+        participant_id= own_participant_record.id,
+        gametable_id = request.vars.twoTableID,
+        priority = 400
+    )
+    response.flash = '卓希望を更新しました'
 
 def error():
     return dict()

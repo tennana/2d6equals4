@@ -14,16 +14,28 @@
 		this.twoTableID = opts.twoTableID || '';
 		this.decision = opts.decision;
 		window.on("update",function(opts){
-			this.oneTableID = opts.oneTableID || this.oneTableID;
-			this.twoTableID = opts.twoTableID || this.twoTableID;
+			this.oneTableID = opts.oneTableID;
+			this.twoTableID = opts.twoTableID;
 			this.decision = opts.decision || this.decision;
 			this.update();
 		}.bind(this));
 
 		selectClick(e){
-			var updateStatus = $({},opts,true);
+			var updateStatus = {"oneTableID":this.oneTableID,"twoTableID":this.twoTableID};
 			var target = e.target.getAttribute("data-target");
+			if(updateStatus[target] == opts.dataTableid) return;
+			if(this.oneTableID == opts.dataTableid){
+				this.oneTableID = (updateStatus["oneTableID"] = null);
+			}
+			if(this.twoTableID == opts.dataTableid){
+				this.twoTableID = (updateStatus["twoTableID"] = null);
+			}
 			updateStatus[target] = opts.dataTableid;
+			$.ajax({
+				type: 'POST',
+				url: "./wish",
+				data: jQuery.param(updateStatus)
+			});
 			window.trigger("update",updateStatus);
 		}
 	</script>

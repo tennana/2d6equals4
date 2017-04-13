@@ -29,8 +29,8 @@
 			return "未選択";
 		}
 		window.on("update",function(opts){
-			this.oneTableID = opts.oneTableID || this.oneTableID;
-			this.twoTableID = opts.twoTableID || this.twoTableID;
+			this.oneTableID = opts.oneTableID;
+			this.twoTableID = opts.twoTableID;
 			this.update();
 		}.bind(this));
 	</script>

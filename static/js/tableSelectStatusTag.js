@@ -11,8 +11,8 @@ riot.tag2('tableselectstatus', '<div if="{opts.GMData}"> <h2>GM情報</h2> <p><a
 			return "未選択";
 		}.bind(this)
 		window.on("update",function(opts){
-			this.oneTableID = opts.oneTableID || this.oneTableID;
-			this.twoTableID = opts.twoTableID || this.twoTableID;
+			this.oneTableID = opts.oneTableID;
+			this.twoTableID = opts.twoTableID;
 			this.update();
 		}.bind(this));
 });
