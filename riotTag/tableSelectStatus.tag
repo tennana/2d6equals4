@@ -1,5 +1,5 @@
 <tableSelectStatus>
-	<div if={ opts.GMData }>
+	<div if={ opts.GMData.gmTableId }>
 	  <h2>GM情報</h2>
 	  <p><a href="#tableInfo_{ opts.GMData.gmTableId }">{ getTableName(opts.GMData.gmTableId) }</a></p>
 	  <p>第一希望:{opts.GMData.one}人</p>
