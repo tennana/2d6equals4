@@ -4,6 +4,8 @@
 	  <p><a href="#tableInfo_{ opts.GMData.gmTableId }">{ getTableName(opts.GMData.gmTableId) }</a></p>
 	  <p>第一希望:{opts.GMData.one}人</p>
 	  <p>第二希望:{opts.GMData.two}人</p>
+	  <h3>参加者</h3>
+	  <ul><li each={opts.GMData.player}>{ name }</li></ul>
 	</div>
 	<div if={ !decision }>
 	  <h2>選択中の卓</h2>

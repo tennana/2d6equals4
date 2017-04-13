@@ -42,12 +42,17 @@ def gameTable():
     tableInfoForJson = [dict(tableID = r.gameTable.id, tableName = r.gameTable.tableName) for r in game_table_info_rows];
     GMDataDic = dict()
     if own_participant_record.category == 1:
+        # GM情報の生成
         own_gameTableInfo_record = db(db.gameTable.created_by == own_participant_record.created_by).select(cacheable=True)
         gmTableId = own_gameTableInfo_record.first().id
 	db_wish_own_table = db.wishforgametable.gametable_id==gmTableId
         GMDataDic["one"] = db((db_wish_own_table) & (db.wishforgametable.priority == 500)).count()
         GMDataDic["two"] = db((db_wish_own_table) & (db.wishforgametable.priority == 400)).count()
 	GMDataDic["gmTableId"] = gmTableId
+
+        decision_participants = db((db.participant.decisionToPlayer == gmTableId) & (db.participant.created_by == auth.user_id))
+        if decision_participants.count() > 0:
+            GMDataDic["player"] = [dict(name = r.auth_user.first_name) for r in decision_participants.select(cacheable=True)]
 
     json_table_data = json.dumps(dict(
          info = tableInfoForJson,
