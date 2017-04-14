@@ -26,11 +26,21 @@ def index():
                      **{'_name':'decisionToPlayer_row_%s' % row.participant.id})
 
     if len(request.post_vars) > 0:
+        gametable_ids = db(db.gameTable).select(db.gameTable.id,cacheable=True)
+        for record in gametable_ids:
+              group_id = auth.id_group('convention_%s_%s' % (1,record.id))
+              if not group_id:
+                  auth.add_group('convention_%s_%s' % (1,record.id),'')
         for key, value in request.post_vars.iteritems():   
             (field_name,sep,row_id) = key.partition('_row_') #name looks like home_state_row_99
-            if row_id:
+            if row_id and db.participant[row_id] and str(db.participant[row_id][field_name]) != str(value):
+                user_id = db.participant[row_id].created_by
+                for record in gametable_ids:
+                    auth.del_membership(auth.id_group('convention_%s_%s' % (1,record.id)),user_id)
                 if value == '':
                     value = None
+                else:
+                    auth.add_membership(auth.id_group('convention_%s_%s' % (1,value)),user_id)
                 db(db.participant.id == row_id).update(**{field_name:value})
 
     FirstWith = db.wishforgametable.with_alias('first_with')
