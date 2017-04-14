@@ -1,14 +1,15 @@
 {{extend 'layout.html'}}
+<div id="tableInfo">
 <style>
-pre { color: black; }
-.btn { display:inline-block }
-.btn-group.btn-block { width:100% }
-.selectBtn { width: 48.2%; }
-.mobile_open_button { display : none; }
+#tableInfo pre { color: black; }
+#tableInfo .btn { display:inline-block }
+#tableInfo .btn-group.btn-block { width:100% }
+#tableInfo .selectBtn { width: 48.2%; }
+#tableInfo .mobile_open_button { display : none; }
 @media (max-width: 480px) {
-	pre { white-space: pre-line; }
-	.mobile_open_button { display : block }
-	.mobile_close > .mobile_ellipsis {display:none}
+	#tableInfo pre { white-space: pre-line; }
+	#tableInfo .mobile_open_button { display : block }
+	#tableInfo .mobile_close > .mobile_ellipsis {display:none}
 }
 </style>
 <a id="top"></a>
@@ -69,3 +70,4 @@ $(function(){
 });
 </script>
 {{ pass }}
+</div>
