@@ -25,10 +25,10 @@ pre { color: black; }
 {{ for tableInfo in game_table_rows: }}
 <section id="tableInfo_{{=tableInfo.gameTable.id}}" class="mobile_close">
 	<h1>{{=tableInfo.gameTable.tableName}}</h1>
-	<p>ゲームマスター : {{=db.participant.created_by.represent(tableInfo.participant.created_by)}}</p>
+	<p>ゲームマスター : {{=db.participant.created_by.represent(tableInfo.participant.created_by,tableInfo)}}</p>
 	<p>{{=T('SystemName')}} : {{=tableInfo.gameTable.systemname}}</p>
 	<p>参加可能人数 : {{=tableInfo.gameTable.minimumnumber}} ～ {{=tableInfo.gameTable.maximumnumber}}</p>
-	<p>{{=T('Level')}} : {{=db.gameTable.gameLevel.represent(tableInfo.gameTable.gameLevel)}}</p>
+	<p>{{=T('Level')}} : {{=db.gameTable.gameLevel.represent(tableInfo.gameTable.gameLevel,tableInfo)}}</p>
 	{{ if tableInfo.gameTable.belongings : }}
 	<p>{{=T('Belongings')}} : {{=tableInfo.gameTable.belongings}}</p>
 	{{ pass }}
