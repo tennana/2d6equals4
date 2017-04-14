@@ -61,7 +61,7 @@ def index():
              'participant.decisionToPlayer':'決定卓',
              'first_with.gametable_id':'第一希望',
              'second_with.gametable_id':'第二希望'
-        },formname='participantTable',user_signature=False,create=False,
+        },formname='lottry',user_signature=False,create=False,
         selectable= lambda ids : redirect(URL('lottry','index',vars=request._get_vars)),
         deletable=False,
         details=False,
@@ -71,3 +71,11 @@ def index():
 
 def options_widget(field,value,**kwargs):
     return SQLFORM.widgets.options.widget(field,value,**kwargs)
+
+def getFirst():
+    res = dict()
+    rows = db(db.wishforgametable.priority == 500).select(db.wishforgametable.participant_id,db.wishforgametable.gametable_id)
+    for row in rows :
+        key = 'decisionToPlayer_row_%s' % row.participant_id
+        res[key] = row.gametable_id
+    return res

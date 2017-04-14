@@ -1,6 +1,23 @@
 {{extend 'layout.html'}}
-<p>{{=form}}</p>
+<div id="lottryBox">{{=form}}</div>
 
 <HR>
+<a class="btn" onclick="getFirst()">第一希望をコピー</a>
 <p>{{=A('manage',_href=URL('manage'))}}</p>
 <p>{{=A('today',_href=URL('today'))}}</p>
+
+<script>
+function getFirst(){
+	$.ajax({
+		type: 'POST',
+		url: "/lottry/getFirst.json",
+		dataType:"json"
+	}).done(function(json){
+		var form = $("#lottryBox").find("form:last").get(0);
+		for(var name in json){
+			if(form[name])
+				form[name].value = json[name];
+		}
+        });
+}
+</script>
