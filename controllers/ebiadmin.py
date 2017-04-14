@@ -75,7 +75,7 @@ def manage():
     db.auth_user.last_name.readable = False
 
     grid = SQLFORM.grid(db[table],args=request.args[:1])
-    return locals()
+    return dict(form=grid)
 
 @auth.requires_membership('admin')
 def today():
@@ -119,4 +119,4 @@ def today():
         }
     )
 
-    return locals()
+    return dict(form=grid,gameTableGrid=gameTableGrid)
