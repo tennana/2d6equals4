@@ -14,7 +14,7 @@
 	</div>
 	<div if={ decision }>
 	  <h2>決定卓</h2>
-	  <p><a href="#{ opts.decision }_anchor"><strong>{ getTableName(opts.decision) }</strong></a></p>
+	  <p><a href="#tableInfo_{ opts.decision }"><strong>{ getTableName(opts.decision) }</strong></a></p>
 	</div>
 	<script>
 		this.oneTableID = opts.oneTableID || '';
