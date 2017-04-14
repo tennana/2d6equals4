@@ -71,3 +71,45 @@ def manage():
     db.auth_user.last_name.readable = False
     grid = SQLFORM.grid(db[table],args=request.args[:1])
     return locals()
+
+@auth.requires_membership('admin')
+def today():
+    db.gameTable.convention_id.readable = False
+    db.gameTable.created_by.readable = True
+    db.gameTable.created_on.readable = True
+    db.gameTable.modified_on.readable = True
+    
+    db.participant.convention.readable = False
+    db.participant.status.readable = False
+    db.participant.created_by.readable = True
+    db.participant.created_on.readable = True
+    db.participant.modified_on.readable = True
+    db.participant.decisionToPlayer.readable = True
+    db.participant.decisionToPlayer.writable = True
+
+    db.auth_user.last_name.readable = False
+    db.wishforgametable.participant_id.writable = False
+
+    FirstWith = db.wishforgametable.with_alias('first_with')
+    SecondWith = db.wishforgametable.with_alias('second_with')
+    gameTableGrid = SQLFORM.smartgrid(db.gameTable,create=False,sortable=False)
+    grid = SQLFORM.grid(
+        db.participant,
+        left=(
+            FirstWith.on((FirstWith.participant_id==db.participant.id) & (FirstWith.priority==500)),
+            SecondWith.on((SecondWith.participant_id==db.participant.id) & (SecondWith.priority==400))
+        ),
+        fields=[db.participant.id,db.participant.created_by,db.participant.category,db.participant.optional_assist,db.participant.optional_closing_party,db.participant.decisionToPlayer,FirstWith.gametable_id,SecondWith.gametable_id],
+        headers={
+             'participant.id':'ID',
+             'participant.created_by':'参加者名',
+             'participant.category':'参加区分',
+             'participant.optional_assist':'えび尻尾',
+             'participant.optional_closing_party':'懇親会参加',
+             'participant.decisionToPlayer':'決定卓',
+             'first_with.gametable_id':'第一希望',
+             'second_with.gametable_id':'第二希望'
+        }
+    )
+
+    return locals()

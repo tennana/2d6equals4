@@ -39,6 +39,7 @@ db.define_table('gameTable',
     Field('convention_id', type='reference convention',
           label=T('Convention Id')),
     auth.signature,
+    format='%(tableName)s',
     migrate=settings.migrate)
 
 db.gameTable._enable_record_versioning()
