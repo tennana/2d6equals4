@@ -51,3 +51,23 @@ def importCSV():
     if form.process().accepted:
         db.import_from_csv_file(form.vars.data.file,unique=False)
     return form
+
+@auth.requires_membership('admin')
+def manage():
+    table = request.args(0)
+    if not table in db.tables():
+         return dict(form=TABLE(*[TR(A(name,_href='/ebiadmin/manage/'+name))
+                       for name in db.tables]))
+
+    db.gameTable.convention_id.readable = False
+    db.gameTable.created_by.readable = True
+    db.gameTable.created_on.readable = True
+    db.gameTable.modified_on.readable = True
+    
+    db.participant.convention.readable = False
+    db.participant.created_by.readable = True
+    db.participant.created_on.readable = True
+    db.participant.modified_on.readable = True
+    db.auth_user.last_name.readable = False
+    grid = SQLFORM.grid(db[table],args=request.args[:1])
+    return locals()
