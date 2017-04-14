@@ -74,7 +74,7 @@ db.participant._enable_record_versioning()
 db.define_table('wishforgametable',
     Field('participant_id', type='reference participant', required=True, ondelete="CASCADE",
           label=T('Participant Id')),
-    Field('gametable_id', type='integer', required=True,
+    Field('gametable_id', type='reference gameTable', required=True, ondelete="CASCADE",
           label=T('Gametable Id')),
     Field('priority', type='integer', default = 0,
           label=T('Priority')),
