@@ -41,6 +41,7 @@ def gameTable():
 
     tableInfoForJson = [dict(tableID = r.gameTable.id, tableName = r.gameTable.tableName) for r in game_table_info_rows];
     GMDataDic = dict()
+    decisionPlayer = None
     if own_participant_record.category == 1:
         # GM情報の生成
         own_gameTableInfo_record = db(db.gameTable.created_by == own_participant_record.created_by).select(cacheable=True)
@@ -53,13 +54,19 @@ def gameTable():
         decision_participants = db((db.participant.decisionToPlayer == gmTableId) & (db.participant.created_by == auth.user_id))
         if decision_participants.count() > 0:
             GMDataDic["player"] = [dict(name = r.auth_user.first_name) for r in decision_participants.select(cacheable=True)]
+            decisionPlayer = GMDataDic["player"]
+    else:
+        decision_participants = db((db.participant.decisionToPlayer == own_participant_record.decisionToPlayer) & (db.participant.created_by == db.auth_user.id))
+        if decision_participants.count() > 0:
+            decisionPlayer = [dict(name = r.auth_user.first_name) for r in decision_participants.select(cacheable=True)]
 
     json_table_data = json.dumps(dict(
          info = tableInfoForJson,
          oneTableID = wishforgametable_record[0].gametable_id if count > 0 else None,
          twoTableID = wishforgametable_record[1].gametable_id if count > 1 else None,
          decision = own_participant_record.decisionToPlayer,
-         GMData = GMDataDic
+         GMData = GMDataDic,
+         decisionPlayer = decisionPlayer
     ))
     return dict(game_table_rows = game_table_info_rows, json_table_data_tag = SCRIPT('var tagData = '+json_table_data, _type='text/javascript'))
 

@@ -7,14 +7,16 @@
 	  <h3>参加者</h3>
 	  <ul><li each={opts.GMData.player}>{ name }</li></ul>
 	</div>
-	<div if={ !decision }>
+	<div if={ !opts.decision }>
 	  <h2>選択中の卓</h2>
 	  <p>第一希望：<br><a href="#tableInfo_{ oneTableID }">{ getTableName(oneTableID) }</a></p>
 	  <p>第二希望：<br><a href="#tableInfo_{ twoTableID }">{ getTableName(twoTableID) }</a></p>
 	</div>
-	<div if={ decision }>
+	<div if={ opts.decision }>
 	  <h2>決定卓</h2>
 	  <p><a href="#tableInfo_{ opts.decision }"><strong>{ getTableName(opts.decision) }</strong></a></p>
+	  <h3>参加者</h3>
+	  <ul><li each={opts.decisionPlayer}>{ name }</li></ul>
 	</div>
 	<script>
 		this.oneTableID = opts.oneTableID || '';
