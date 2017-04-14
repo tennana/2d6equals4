@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 ### required - do no delete
+import StringIO
 def user(): return dict(form=auth())
 def download(): return response.download(request,db)
 def call(): return service()
@@ -36,3 +37,17 @@ def user_list():
 		count = db(db[args[1]]).count()
 
 	return dict(form=crud(),count=count)
+
+@auth.requires_membership('admin')
+def export():
+    s = StringIO.StringIO()
+    db.export_to_csv_file(s)
+    response.headers['Content-Type'] = 'text/csv'
+    return s.getvalue()
+
+@auth.requires_membership('admin')
+def importCSV():
+    form = FORM(INPUT(_type='file', _name='data'), INPUT(_type='submit'))
+    if form.process().accepted:
+        db.import_from_csv_file(form.vars.data.file,unique=False)
+    return form
