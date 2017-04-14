@@ -68,7 +68,12 @@ def manage():
     db.participant.created_by.readable = True
     db.participant.created_on.readable = True
     db.participant.modified_on.readable = True
+    db.participant.lottry_exclude.readable = True
+    db.participant.lottry_exclude.writable = True
+    db.participant.decisionToPlayer.readable = True
+    db.participant.decisionToPlayer.writable = True
     db.auth_user.last_name.readable = False
+
     grid = SQLFORM.grid(db[table],args=request.args[:1])
     return locals()
 
@@ -86,6 +91,8 @@ def today():
     db.participant.modified_on.readable = True
     db.participant.decisionToPlayer.readable = True
     db.participant.decisionToPlayer.writable = True
+    db.participant.lottry_exclude.readable = True
+    db.participant.lottry_exclude.writable = True
 
     db.auth_user.last_name.readable = False
     db.wishforgametable.participant_id.writable = False
@@ -99,7 +106,7 @@ def today():
             FirstWith.on((FirstWith.participant_id==db.participant.id) & (FirstWith.priority==500)),
             SecondWith.on((SecondWith.participant_id==db.participant.id) & (SecondWith.priority==400))
         ),
-        fields=[db.participant.id,db.participant.created_by,db.participant.category,db.participant.optional_assist,db.participant.optional_closing_party,db.participant.decisionToPlayer,FirstWith.gametable_id,SecondWith.gametable_id],
+        fields=[db.participant.id,db.participant.created_by,db.participant.category,db.participant.optional_assist,db.participant.optional_closing_party,db.participant.lottry_exclude,db.participant.decisionToPlayer,FirstWith.gametable_id,SecondWith.gametable_id],
         headers={
              'participant.id':'ID',
              'participant.created_by':'参加者名',
