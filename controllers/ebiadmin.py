@@ -99,7 +99,9 @@ def today():
 
     FirstWith = db.wishforgametable.with_alias('first_with')
     SecondWith = db.wishforgametable.with_alias('second_with')
-    gameTableGrid = SQLFORM.smartgrid(db.gameTable,create=False,sortable=False)
+    gameTableGrid = SQLTABLE(db(db.gameTable).select(db.gameTable.id,db.gameTable.tableName,db.gameTable.minimumnumber,db.gameTable.maximumnumber,cacheable=True),
+    headers={'gameTable.id':'ID','gameTable.tableName':'卓名','gameTable.minimumnumber':'最小','gameTable.maximumnumber':'最大'}
+    )
     grid = SQLFORM.grid(
         db.participant,
         left=(
@@ -116,7 +118,7 @@ def today():
              'participant.decisionToPlayer':'決定卓',
              'first_with.gametable_id':'第一希望',
              'second_with.gametable_id':'第二希望'
-        }
+        },formname='participantTable',user_signature=False
     )
 
     return dict(form=grid,gameTableGrid=gameTableGrid)

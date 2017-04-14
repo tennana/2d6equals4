@@ -1,7 +1,13 @@
 {{extend 'layout.html'}}
-<p>{{=gameTableGrid}}</p>
+<div id="gameGrid">
+{{=gameTableGrid}}
+</div>
 
-<p>{{=form}}</p>
+<div>{{=form}}</div>
 
 <HR>
 {{=A('manage',_href=URL('manage'))}}
+
+<style>
+#gameGrid td { padding:1em }
+</style>
