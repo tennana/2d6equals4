@@ -24,6 +24,7 @@
 			var updateStatus = {"oneTableID":this.oneTableID,"twoTableID":this.twoTableID};
 			var target = e.target.getAttribute("data-target");
 			if(updateStatus[target] == opts.dataTableid) return;
+			if(!confirm(this.getTableName(opts.dataTableid)+"を希望しますか?")) return;
 			if(this.oneTableID == opts.dataTableid){
 				this.oneTableID = (updateStatus["oneTableID"] = null);
 			}
@@ -37,6 +38,16 @@
 				data: jQuery.param(updateStatus)
 			});
 			window.trigger("update",updateStatus);
+		}
+
+		getTableName(tableID){
+			if(tableID === undefined) return "未選択";
+			for( var i in opts.info){
+				if(opts.info[i].tableID == tableID){
+					return opts.info[i].tableName;
+				}
+			}
+			return "未選択";
 		}
 	</script>
 </tableSelectButton>
