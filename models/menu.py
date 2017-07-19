@@ -9,6 +9,7 @@ response.menu = [
 (T('卓情報'),URL('default','gameTable')==URL(),URL('default','gameTable'),[]),
 ]
 
+'''
 own_participant_record = db.participant(db.participant.created_by==auth.user_id)
 if(own_participant_record):
 	response.menu.append(
@@ -17,3 +18,4 @@ if(own_participant_record):
 			(T('新規作成'),URL('default','messages')==URL('default','messages/new'),URL('default','messages/new'))
 		]))
 	);
+'''
