@@ -108,7 +108,6 @@ def participant_manage():
 	own_gameTable_record = None
 
 	readonly = db.convention[1].openingDate < datetime.datetime.today() # 開始時刻を過ぎたら編集不可
-	db.participant.optional_closing_party.writable = False
 
 	if auth.user.email:
 		db.auth_user.email.writable = False
