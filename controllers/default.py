@@ -17,7 +17,7 @@ def index():
     )
     return dict(participant_list=SQLTABLE(
 	list,
-	headers={'participant.category':'参加区分','COUNT(participant.id)':"人数"},
+	headers={'participant.category':'参加区分','COUNT(`participant`.`id`)':'人数'},
 	_id='participant_list'
     ))
 
