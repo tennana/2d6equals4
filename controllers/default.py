@@ -146,7 +146,7 @@ def participant_manage():
 	form.vars.first_name = auth.user.first_name
 	form.vars.email = auth.user.email
 
-	if form.process().accepted:
+	if form.validate():
 		if form.deleted:
 			own_participant_record.delete_record()
 			if own_gameTable_record:
